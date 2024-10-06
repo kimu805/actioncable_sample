@@ -2,7 +2,13 @@ import consumer from "channels/consumer"
 
 consumer.subscriptions.create("RoomChannel", {
   connected() {
-    // Called when the subscription is ready for use on the server
+    document.querySelector("input[data-behavior='room-speaker']").addEventListener("keypress", (event) => {
+      if (event.key === "Enter") {
+        this.speak(event.target.value)
+        event.target.value = ""
+        return event.preventDefault()
+      }
+    })
   },
 
   disconnected() {
@@ -10,7 +16,8 @@ consumer.subscriptions.create("RoomChannel", {
   },
 
   received(data) {
-    alert(data["message"])
+    const element = document.querySelector("#messages")
+    element.insertAdjacentElement("beforeend", data["message"])
   },
 
   speak: function(message) {
