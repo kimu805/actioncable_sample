@@ -1,6 +1,6 @@
 import consumer from "channels/consumer"
 
-window.app = consumer.subscriptions.create("RoomChannel", {
+consumer.subscriptions.create("RoomChannel", {
   connected() {
     // Called when the subscription is ready for use on the server
   },
@@ -13,7 +13,7 @@ window.app = consumer.subscriptions.create("RoomChannel", {
     alert(data["message"])
   },
 
-  speak: function() {
+  speak: function(message) {
     return this.perform('speak', {message: message});
   }
 });
